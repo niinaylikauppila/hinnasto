@@ -12,7 +12,6 @@ app.use(express.static('build'))
 
 app.get('/api/products', (req, res) => {
     Product.find({}).then(products => {
-        console.log(products)
         res.json(products)
     })
 })
@@ -35,12 +34,23 @@ app.post('/api/products', (request, response) => {
         response.json(savedProduct)
     })
 })
-/*app.delete('/api/products/:id', (request, response) => {
+app.put('/api/products/:id', (request, response) => {
+    const { name, price } = request.body
+    Product.findByIdAndUpdate(
+        request.params.id,
+        { name, price },
+        {returnDocument:'after'}
+    )
+        .then(result => {
+            response.json(result)
+        })
+})
+app.delete('/api/products/:id', (request, response) => {
     Product.findByIdAndDelete(request.params.id)
         .then(result => {
             response.status(204).end()
         })
-})*/
+})
 const PORT = process.env.PORT
 app.listen(PORT)
 console.log(`Server running on port ${PORT}`)

@@ -1,5 +1,5 @@
-export const ProductForm = ({ product, handleProductChange, saveProduct }) => {
-
+export const ProductForm = ({ product, handleProductChange, saveProduct, isEditMode }) => {
+ 
   const handleName = (event) => {
     handleProductChange({ ...product, name: event.target.value });
   };
@@ -9,11 +9,12 @@ export const ProductForm = ({ product, handleProductChange, saveProduct }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     saveProduct(product);
+    
   };
 
   return (
     <form className='' onSubmit={handleSubmit}>
-
+      <h3>{isEditMode ? 'Muokkaa':'Lisää tuote' }</h3>
       <div className='mb-2'>
         <div className="row mb-1">
           <label className="text-end col-2 col-form-label" htmlFor='productName'>Nimi</label>
